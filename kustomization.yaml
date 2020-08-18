@@ -18,6 +18,7 @@ resources:
   - v1.Service-querier.yaml
   - v1.Service-query-frontend.yaml
   - servicemonitor.yaml
+  - ./promtail
 configMapGenerator:
   - name: loki
     files:
