@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - apps-v1.Deployment-consul.yaml
+  - apps-v1.Deployment-distributor.yaml
+  - apps-v1.Deployment-gateway.yaml
+  - apps-v1.Deployment-query-frontend.yaml
+  - apps-v1.Deployment-table-manager.yaml
+  - apps-v1.StatefulSet-compactor.yaml
+  - apps-v1.StatefulSet-ingester.yaml
+  - apps-v1.StatefulSet-memcached-frontend.yaml
+  - apps-v1.StatefulSet-memcached-index-queries.yaml
+  - apps-v1.StatefulSet-memcached.yaml
+  - apps-v1.StatefulSet-querier.yaml
+  - policy-v1beta1.PodDisruptionBudget-loki-ingester-pdb.yaml
+  - rbac.authorization.k8s.io-v1beta1.RoleBinding-consul-sidekick.yaml
+  - rbac.authorization.k8s.io-v1beta1.Role-consul-sidekick.yaml
+  - v1.ConfigMap-consul.yaml
+  - v1.ConfigMap-gateway-config.yaml
+  - v1.ConfigMap-loki.yaml
+  - v1.ConfigMap-overrides.yaml
+  - v1.Namespace-loki.yaml
+  - v1.Secret-gateway-secret.yaml
+  - v1.ServiceAccount-consul-sidekick.yaml
+  - v1.Service-consul.yaml
+  - v1.Service-distributor.yaml
+  - v1.Service-gateway.yaml
+  - v1.Service-ingester.yaml
+  - v1.Service-memcached-frontend.yaml
+  - v1.Service-memcached-index-queries.yaml
+  - v1.Service-memcached.yaml
+  - v1.Service-querier.yaml
+  - v1.Service-query-frontend.yaml
+  - v1.Service-table-manager.yaml

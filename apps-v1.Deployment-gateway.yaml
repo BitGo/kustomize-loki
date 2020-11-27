@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: loki
+spec:
+  minReadySeconds: 10
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: gateway
+  template:
+    metadata:
+      annotations:
+        config_hash: 69b9d95127441cd15113fffca25a4e6d
+      labels:
+        name: gateway
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                name: gateway
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - image: nginx:1.15.1-alpine
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        volumeMounts:
+        - mountPath: /etc/nginx
+          name: gateway-config
+        - mountPath: /etc/nginx/secrets
+          name: gateway-secret
+      volumes:
+      - configMap:
+          name: gateway-config
+        name: gateway-config
+      - name: gateway-secret
+        secret:
+          defaultMode: 420
+          secretName: gateway-secret
