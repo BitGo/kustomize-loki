@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: consul
   labels:
     name: consul
-  name: consul
-  namespace: loki
 spec:
   ports:
   - name: consul-server

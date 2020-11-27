@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: table-manager
   labels:
     name: table-manager
-  name: table-manager
-  namespace: loki
 spec:
   ports:
   - name: table-manager-http-metrics

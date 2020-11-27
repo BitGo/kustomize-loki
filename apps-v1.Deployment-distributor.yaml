@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: distributor
-  namespace: loki
 spec:
   minReadySeconds: 10
   replicas: 3
@@ -12,8 +11,6 @@ spec:
       name: distributor
   template:
     metadata:
-      annotations:
-        config_hash: e874a8cded5fc88d5b8477a1688b107f
       labels:
         name: distributor
     spec:
@@ -25,13 +22,12 @@ spec:
                 name: distributor
             topologyKey: kubernetes.io/hostname
       containers:
-      - args:
+      - name: distributor
+        args:
         - -config.file=/etc/loki/config/config.yaml
         - -limits.per-user-override-config=/etc/loki/overrides/overrides.yaml
         - -target=distributor
         image: grafana/loki:2.0.0
-        imagePullPolicy: IfNotPresent
-        name: distributor
         ports:
         - containerPort: 3100
           name: http-metrics

@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: table-manager
-  namespace: loki
 spec:
   minReadySeconds: 10
   replicas: 1
@@ -12,23 +11,16 @@ spec:
       name: table-manager
   template:
     metadata:
-      annotations:
-        config_hash: e874a8cded5fc88d5b8477a1688b107f
       labels:
         name: table-manager
     spec:
       containers:
-      - args:
-        - -bigtable.backoff-on-ratelimits=true
-        - -bigtable.grpc-client-rate-limit=5
-        - -bigtable.grpc-client-rate-limit-burst=5
-        - -bigtable.table-cache.enabled=true
+      - name: table-manager
+        args:
         - -config.file=/etc/loki/config/config.yaml
         - -limits.per-user-override-config=/etc/loki/overrides/overrides.yaml
         - -target=table-manager
         image: grafana/loki:2.0.0
-        imagePullPolicy: IfNotPresent
-        name: table-manager
         ports:
         - containerPort: 3100
           name: http-metrics

@@ -1,10 +1,9 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
+  name: loki-ingester-pdb
   labels:
     name: loki-ingester-pdb
-  name: loki-ingester-pdb
-  namespace: loki
 spec:
   maxUnavailable: 1
   selector:

@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gateway
-  namespace: loki
 spec:
   minReadySeconds: 10
   replicas: 3
@@ -12,8 +11,6 @@ spec:
       name: gateway
   template:
     metadata:
-      annotations:
-        config_hash: 69b9d95127441cd15113fffca25a4e6d
       labels:
         name: gateway
     spec:
@@ -25,9 +22,8 @@ spec:
                 name: gateway
             topologyKey: kubernetes.io/hostname
       containers:
-      - image: nginx:1.15.1-alpine
-        imagePullPolicy: IfNotPresent
-        name: nginx
+      - name: nginx
+        image: nginx:1.15.1-alpine
         ports:
         - containerPort: 80
           name: http

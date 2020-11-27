@@ -15,12 +15,6 @@ resources:
   - policy-v1beta1.PodDisruptionBudget-loki-ingester-pdb.yaml
   - rbac.authorization.k8s.io-v1beta1.RoleBinding-consul-sidekick.yaml
   - rbac.authorization.k8s.io-v1beta1.Role-consul-sidekick.yaml
-  - v1.ConfigMap-consul.yaml
-  - v1.ConfigMap-gateway-config.yaml
-  - v1.ConfigMap-loki.yaml
-  - v1.ConfigMap-overrides.yaml
-  - v1.Namespace-loki.yaml
-  - v1.Secret-gateway-secret.yaml
   - v1.ServiceAccount-consul-sidekick.yaml
   - v1.Service-consul.yaml
   - v1.Service-distributor.yaml
@@ -32,3 +26,38 @@ resources:
   - v1.Service-querier.yaml
   - v1.Service-query-frontend.yaml
   - v1.Service-table-manager.yaml
+configMapGenerator:
+  - name: consul
+    files:
+      - files/consul-config.json
+      - files/mapping
+  - name: gateway-config
+    files:
+      - files/nginx.conf
+  - name: loki
+    files:
+      - files/config.yaml
+  - name: overrides
+    files:
+      - files/overrides.yaml
+secretGenerator:
+  - name: gateway-secret
+    options:
+    literals:
+      - .htpasswd=loki:$apr1$H4yGiGNg$ssl5/NymaGFRUvxIV1Nyr.
+images:
+  - name: consul:1.5.3
+    digest: sha256:0e7b52eecffb7e58c2395849b3e966b31fb9fe907e2c47b4aa83bc94591db2cf
+  - name: grafana/loki:2.0.0
+    digest: sha256:77e138f81a8e253f1d0ea5d2dc329a02212ecab3247c87f85f1f2182a0160ccd
+  - name: memcached:1.5.17-alpine
+    digest: sha256:2edec12383a224bccf2b6fae803af75ec579cd00dbba1173b73429271ceb5f68
+  - name: nginx:1.15.1-alpine
+  - name: prom/consul-exporter:v0.5.0
+    digest: sha256:3f171417faa0dedeb085cacf670ce9c2ef6faa50ddffcec17321b6ef1c11f0e9
+  - name: prom/memcached-exporter:v0.6.0
+    digest: sha256:86849b970e06f03cf91024b398015e6b394bc8aa1d515b46ea1c4de1fe8d8657
+  - name: prom/statsd-exporter:v0.12.2
+    digest: sha256:c756da5fff2d7789e9cd28af852484278ae21b855323221876ac224a213f7fb3
+  - name: weaveworks/consul-sidekick:master-f18ad13
+    digest: sha256:f5dfe55d21fb70738b3db403106d32b039d8c1b0abc1c68af57df6d38bd8b0b4

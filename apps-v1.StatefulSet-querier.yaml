@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: querier
-  namespace: loki
 spec:
   replicas: 3
   selector:
@@ -11,8 +10,6 @@ spec:
   serviceName: querier
   template:
     metadata:
-      annotations:
-        config_hash: e874a8cded5fc88d5b8477a1688b107f
       labels:
         name: querier
     spec:
@@ -24,14 +21,13 @@ spec:
                 name: querier
             topologyKey: kubernetes.io/hostname
       containers:
-      - args:
+      - name: querier
+        args:
         - -boltdb.shipper.cache-location=/data/boltdb-cache
         - -config.file=/etc/loki/config/config.yaml
         - -limits.per-user-override-config=/etc/loki/overrides/overrides.yaml
         - -target=querier
         image: grafana/loki:2.0.0
-        imagePullPolicy: IfNotPresent
-        name: querier
         ports:
         - containerPort: 3100
           name: http-metrics
@@ -76,4 +72,3 @@ spec:
       resources:
         requests:
           storage: 10Gi
-      storageClassName: fast
