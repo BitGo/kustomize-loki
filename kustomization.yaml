@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - apps-v1.Deployment-consul.yaml
   - apps-v1.Deployment-distributor.yaml
-  - apps-v1.Deployment-gateway.yaml
   - apps-v1.Deployment-query-frontend.yaml
   - apps-v1.Deployment-table-manager.yaml
   - apps-v1.StatefulSet-compactor.yaml
@@ -18,7 +17,6 @@ resources:
   - v1.ServiceAccount-consul-sidekick.yaml
   - v1.Service-consul.yaml
   - v1.Service-distributor.yaml
-  - v1.Service-gateway.yaml
   - v1.Service-ingester.yaml
   - v1.Service-memcached-frontend.yaml
   - v1.Service-memcached-index-queries.yaml
@@ -31,20 +29,12 @@ configMapGenerator:
     files:
       - files/consul-config.json
       - files/mapping
-  - name: gateway-config
-    files:
-      - files/nginx.conf
   - name: loki
     files:
       - files/config.yaml
   - name: overrides
     files:
       - files/overrides.yaml
-secretGenerator:
-  - name: gateway-secret
-    options:
-    literals:
-      - .htpasswd=loki:$apr1$H4yGiGNg$ssl5/NymaGFRUvxIV1Nyr.
 images:
   - name: consul:1.5.3
     digest: sha256:0e7b52eecffb7e58c2395849b3e966b31fb9fe907e2c47b4aa83bc94591db2cf
@@ -52,7 +42,6 @@ images:
     digest: sha256:77e138f81a8e253f1d0ea5d2dc329a02212ecab3247c87f85f1f2182a0160ccd
   - name: memcached:1.5.17-alpine
     digest: sha256:2edec12383a224bccf2b6fae803af75ec579cd00dbba1173b73429271ceb5f68
-  - name: nginx:1.15.1-alpine
   - name: prom/consul-exporter:v0.5.0
     digest: sha256:3f171417faa0dedeb085cacf670ce9c2ef6faa50ddffcec17321b6ef1c11f0e9
   - name: prom/memcached-exporter:v0.6.0
