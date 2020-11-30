@@ -25,7 +25,6 @@ spec:
       - name: distributor
         args:
         - -config.file=/etc/loki/config/config.yaml
-        - -limits.per-user-override-config=/etc/loki/overrides/overrides.yaml
         - -target=distributor
         image: grafana/loki:2.0.0
         ports:
@@ -49,12 +48,7 @@ spec:
         volumeMounts:
         - mountPath: /etc/loki/config
           name: loki
-        - mountPath: /etc/loki/overrides
-          name: overrides
       volumes:
       - configMap:
           name: loki
         name: loki
-      - configMap:
-          name: overrides
-        name: overrides

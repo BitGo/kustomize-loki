@@ -25,7 +25,6 @@ spec:
         args:
         - -boltdb.shipper.cache-location=/data/boltdb-cache
         - -config.file=/etc/loki/config/config.yaml
-        - -limits.per-user-override-config=/etc/loki/overrides/overrides.yaml
         - -target=querier
         image: grafana/loki:2.0.0
         ports:
@@ -48,17 +47,12 @@ spec:
           name: querier-data
         - mountPath: /etc/loki/config
           name: loki
-        - mountPath: /etc/loki/overrides
-          name: overrides
       securityContext:
         fsGroup: 10001
       volumes:
       - configMap:
           name: loki
         name: loki
-      - configMap:
-          name: overrides
-        name: overrides
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:

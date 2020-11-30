@@ -30,9 +30,6 @@ configMapGenerator:
   - name: loki
     files:
       - files/config.yaml
-  - name: overrides
-    files:
-      - files/overrides.yaml
 images:
   - name: consul:1.5.3
     digest: sha256:0e7b52eecffb7e58c2395849b3e966b31fb9fe907e2c47b4aa83bc94591db2cf

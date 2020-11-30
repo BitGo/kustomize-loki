@@ -27,7 +27,6 @@ spec:
         - -boltdb.shipper.cache-location=/data/boltdb-cache
         - -config.file=/etc/loki/config/config.yaml
         - -ingester.max-transfer-retries=0
-        - -limits.per-user-override-config=/etc/loki/overrides/overrides.yaml
         - -target=ingester
         image: grafana/loki:2.0.0
         ports:
@@ -53,8 +52,6 @@ spec:
           name: ingester-data
         - mountPath: /etc/loki/config
           name: loki
-        - mountPath: /etc/loki/overrides
-          name: overrides
       securityContext:
         fsGroup: 10001
       terminationGracePeriodSeconds: 4800
@@ -62,9 +59,6 @@ spec:
       - configMap:
           name: loki
         name: loki
-      - configMap:
-          name: overrides
-        name: overrides
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:
