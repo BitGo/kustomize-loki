@@ -48,6 +48,7 @@ spec:
         runAsGroup: 10001
         runAsNonRoot: true
         runAsUser: 10001
+      serviceAccount: loki
       volumes:
       - configMap:
           name: loki

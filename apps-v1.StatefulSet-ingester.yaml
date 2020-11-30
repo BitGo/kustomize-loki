@@ -65,6 +65,7 @@ spec:
         runAsGroup: 10001
         runAsNonRoot: true
         runAsUser: 10001
+      serviceAccount: loki
       terminationGracePeriodSeconds: 4800
       volumes:
       - configMap:

@@ -10,6 +10,7 @@ resources:
   - apps-v1.StatefulSet-memcached.yaml
   - apps-v1.StatefulSet-querier.yaml
   - policy-v1beta1.PodDisruptionBudget-loki-ingester-pdb.yaml
+  - v1.ServiceAccount-loki.yaml
   - v1.Service-distributor.yaml
   - v1.Service-ingester.yaml
   - v1.Service-memcached-frontend.yaml
