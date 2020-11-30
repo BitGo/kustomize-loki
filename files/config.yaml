@@ -104,6 +104,3 @@ storage_config:
             consistent_hash: true
             host: memcached-index-queries
             service: memcached-client
-table_manager:
-    creation_grace_period: 3h
-    poll_interval: 10m
