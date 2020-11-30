@@ -89,7 +89,8 @@ server:
     http_server_write_timeout: 1m
 storage_config:
     aws:
-        s3: ${LOKI_STORAGE_CONFIG_AWS_S3}
+        s3: s3:///${LOKI_STORAGE_CONFIG_AWS_BUCKETNAMES}
+        sse_encryption: true
     boltdb_shipper:
         shared_store: aws
     index_queries_cache_config:
