@@ -4,6 +4,7 @@ resources:
   # Generated from promtail-2.0.1 helm chart
   ## persistence.enabled=true
   ## serviceMonitor.enabled=true
+  ## tolerations[0].operator=Exists
   - resources.yaml
 configMapGenerator:
   - name: loki-promtail
