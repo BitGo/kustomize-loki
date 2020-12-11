@@ -25,6 +25,7 @@ spec:
         args:
         - -boltdb.shipper.active-index-directory=/data/index
         - -boltdb.shipper.cache-location=/data/boltdb-cache
+        - -config.expand-env
         - -config.file=/etc/loki/config/config.yaml
         - -ingester.max-transfer-retries=0
         - -target=ingester

@@ -25,7 +25,7 @@ configMapGenerator:
       - files/config.yaml
 images:
   - name: grafana/loki:2.0.0
-    digest: sha256:77e138f81a8e253f1d0ea5d2dc329a02212ecab3247c87f85f1f2182a0160ccd
+    digest: sha256:54a09649ff40c10186bb835cea842cbd564451d2864e6a72d851bab2825e71e5
   - name: memcached
     # 1.6.9-alpine
     digest: sha256:691e70c8483ee0cd2f9634b2a3e2a129f945c25e1c687937f46b9b407d70d11c
