@@ -32,6 +32,11 @@ spec:
           requests:
             cpu: "4"
             memory: 2Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ALL]
+          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /data
           name: compactor-data
@@ -39,6 +44,9 @@ spec:
           name: loki
       securityContext:
         fsGroup: 10001
+        runAsGroup: 10001
+        runAsNonRoot: true
+        runAsUser: 10001
       volumes:
       - configMap:
           name: loki

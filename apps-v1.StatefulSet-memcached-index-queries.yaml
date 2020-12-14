@@ -38,6 +38,11 @@ spec:
           requests:
             cpu: 500m
             memory: 1329Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ALL]
+          readOnlyRootFilesystem: true
       - name: exporter
         args:
         - --memcached.address=localhost:11211
@@ -46,5 +51,15 @@ spec:
         ports:
         - containerPort: 9150
           name: http-metrics
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ALL]
+          readOnlyRootFilesystem: true
+      securityContext:
+        fsGroup: 11211
+        runAsGroup: 11211
+        runAsNonRoot: true
+        runAsUser: 11211
   updateStrategy:
     type: RollingUpdate

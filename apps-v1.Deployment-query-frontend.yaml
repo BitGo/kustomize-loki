@@ -45,9 +45,19 @@ spec:
           requests:
             cpu: "2"
             memory: 600Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ALL]
+          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /etc/loki/config
           name: loki
+      securityContext:
+        fsGroup: 10001
+        runAsGroup: 10001
+        runAsNonRoot: true
+        runAsUser: 10001
       volumes:
       - configMap:
           name: loki

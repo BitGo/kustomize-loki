@@ -47,6 +47,11 @@ spec:
           requests:
             cpu: "1"
             memory: 5Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ALL]
+          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /data
           name: ingester-data
@@ -54,6 +59,9 @@ spec:
           name: loki
       securityContext:
         fsGroup: 10001
+        runAsGroup: 10001
+        runAsNonRoot: true
+        runAsUser: 10001
       terminationGracePeriodSeconds: 4800
       volumes:
       - configMap:
