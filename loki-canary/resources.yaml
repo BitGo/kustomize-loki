@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: loki-canary
+spec:
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      name: loki-canary
+  template:
+    metadata:
+      labels:
+        name: loki-canary
+    spec:
+      containers:
+      - name: loki-canary
+        image: grafana/loki-canary:2.0.0
+        args:
+        - -addr=$(LOKI_ADDRESS)
+        - -labelname=pod
+        - -labelvalue=$(POD_NAME)
+        env:
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: LOKI_ADDRESS
+          value: query-frontend:3100
+        ports:
+        - containerPort: 3500
+          name: http-metrics
+        resources:
+          requests:
+            cpu: 10m
+            memory: 20Mi
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+  updateStrategy:
+    type: RollingUpdate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loki-canary
+  labels:
+    name: loki-canary
+spec:
+  type: ClusterIP
+  selector:
+    name: loki-canary
+  ports:
+  - name: http-metrics
+    protocol: TCP
+    port: 3500
+    targetPort: 3500
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: loki-canary
+  labels:
+    name: loki-canary
+spec:
+  selector:
+    matchLabels:
+      name: loki-canary
+  endpoints:
+  - port: http-metrics

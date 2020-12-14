@@ -23,6 +23,7 @@ resources:
   - alerting-rules.yaml
   - recording-rules.yaml
   - ./promtail
+  - ./loki-canary
 configMapGenerator:
   - name: loki
     files:
