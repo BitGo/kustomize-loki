@@ -12,6 +12,8 @@ This setup uses the new boltdb-shipper shipped with Loki 2.0.0.
   - ingester: writes logs to backing store
   - query-frontend: (optional) [info](https://github.com/grafana/loki/blob/master/docs/sources/architecture/_index.md#query-frontend)
   - querier: performs the queries
+  - ruler: alerting [info](https://grafana.com/docs/loki/latest/rules/)
+    This application includes a sidecar that picks up rules from kubernetes `ConfigMap` with the label `loki_rule` set.
   - table-manager: (not used)
 
 

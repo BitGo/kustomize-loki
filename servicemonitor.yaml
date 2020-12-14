@@ -61,6 +61,18 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
+  name: ruler
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ruler
+      app.kubernetes.io/part-of: loki
+  endpoints:
+  - port: ruler-http-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
   name: memcached-frontend
 spec:
   selector:

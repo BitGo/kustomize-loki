@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ruler
+  labels:
+    app.kubernetes.io/name: ruler
+    app.kubernetes.io/part-of: loki
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ruler
+      app.kubernetes.io/part-of: loki
+  serviceName: ruler
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ruler
+        app.kubernetes.io/part-of: loki
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: ruler
+                app.kubernetes.io/part-of: loki
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: ruler
+        args:
+        - -boltdb.shipper.cache-location=/data/boltdb-cache
+        - -config.expand-env
+        - -config.file=/etc/loki/config/config.yaml
+        - -target=ruler
+        image: grafana/loki
+        ports:
+        - containerPort: 3100
+          name: http-metrics
+        - containerPort: 9095
+          name: grpc
+        - containerPort: 7946
+          name: memberlist
+        resources:
+          requests:
+            cpu: "1"
+            memory: 6Gi
+          limits:
+            cpu: "16"
+            memory: 16Gi
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3100
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ALL]
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /data
+          name: ruler-data
+        - mountPath: /run/loki/ruler/scratch
+          name: ruler-scratch
+        - mountPath: /etc/loki/config
+          name: loki
+      securityContext:
+        fsGroup: 10001
+        runAsGroup: 10001
+        runAsNonRoot: true
+        runAsUser: 10001
+      serviceAccount: loki
+      volumes:
+      - configMap:
+          name: loki
+        name: loki
+      - name: ruler-scratch
+        emptyDir: {}
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: ruler-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi

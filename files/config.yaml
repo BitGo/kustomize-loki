@@ -62,6 +62,7 @@ memberlist:
     - distributor
     - ingester
     - querier
+    - ruler
 querier:
   query_ingesters_within: 2h
 query_range:
@@ -77,7 +78,19 @@ query_range:
         service: memcached-client
         timeout: 500ms
   split_queries_by_interval: 30m
-ruler: {}
+ruler:
+  alertmanager_url: ${LOKI_RULER_ALERTMANAGER_URL}
+  enable_alertmanager_v2: true
+  enable_api: true
+  enable_sharding: true
+  ring:
+    kvstore:
+      store: memberlist
+  rule_path: /run/loki/ruler/scratch/
+  storage:
+    type: local
+    local:
+      directory: /etc/loki/rules
 schema_config:
   configs:
     - from: "2020-10-24"
