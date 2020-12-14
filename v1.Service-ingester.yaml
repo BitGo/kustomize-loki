@@ -12,5 +12,8 @@ spec:
   - name: ingester-grpc
     port: 9095
     targetPort: 9095
+  - name: ingester-memberlist
+    port: 7946
+    targetPort: 7946
   selector:
     name: ingester

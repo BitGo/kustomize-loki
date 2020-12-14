@@ -12,5 +12,8 @@ spec:
   - name: distributor-grpc
     port: 9095
     targetPort: 9095
+  - name: distributor-memberlist
+    port: 7946
+    targetPort: 7946
   selector:
     name: distributor

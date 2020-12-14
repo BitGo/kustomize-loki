@@ -32,6 +32,8 @@ spec:
           name: http-metrics
         - containerPort: 9095
           name: grpc
+        - containerPort: 7946
+          name: memberlist
         readinessProbe:
           httpGet:
             path: /ready

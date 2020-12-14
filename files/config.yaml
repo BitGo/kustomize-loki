@@ -14,13 +14,7 @@ compactor:
 distributor:
     ring:
         kvstore:
-            consul:
-                consistent_reads: false
-                host: consul:8500
-                http_client_timeout: 20s
-                watch_burst_size: 1
-                watch_rate_limit: 1
-            store: consul
+            store: memberlist
 frontend:
     compress_responses: true
     log_queries_longer_than: 5s
@@ -40,11 +34,7 @@ ingester:
         ring:
             heartbeat_timeout: 1m
             kvstore:
-                consul:
-                    consistent_reads: true
-                    host: consul:8500
-                    http_client_timeout: 20s
-                store: consul
+                store: memberlist
             replication_factor: 3
     max_transfer_retries: 60
 ingester_client:
@@ -63,6 +53,10 @@ limits_config:
     max_streams_per_user: 0
     reject_old_samples: true
     reject_old_samples_max_age: 168h
+memberlist:
+    join_members:
+      - distributor
+      - ingester
 querier:
     query_ingesters_within: 2h
 query_range:
