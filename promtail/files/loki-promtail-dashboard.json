@@ -79,7 +79,7 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": false,
+      "stack": true,
       "steppedLine": false,
       "targets": [
         {
@@ -87,7 +87,7 @@
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "Active Targets",
+          "legendFormat": "Active targets",
           "legendLink": null,
           "refId": "A",
           "step": 10
@@ -586,7 +586,7 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 11,
         "w": 12,
         "x": 12,
         "y": 17
@@ -799,5 +799,5 @@
   "timezone": "utc",
   "title": "Loki / Promtail",
   "uid": "rBadqbJGk",
-  "version": 2
+  "version": 3
 }
