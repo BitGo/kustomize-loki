@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: loki-alerting-rules
+spec:
+  groups:
+    - name: loki.alerts
+      rules:
+      - alert: LokiRequestErrors
+        annotations:
+          message: |
+            {{ $labels.job }} {{ $labels.route }} is experiencing {{ $value | humanizePercentage }}% percent errors.
+        expr: |
+          100 * sum(rate(loki_request_duration_seconds_count{status_code=~"5.."}[1m])) by (namespace, job, route)
+            /
+          sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)
+            > 10
+        for: 15m
+        labels:
+          severity: critical
+      - alert: LokiRequestPanics
+        annotations:
+          message: |
+            {{ $labels.job }} is experiencing {{ $value | humanizePercentage }}% percent increase of panics.
+        expr: |
+          sum(increase(loki_panic_total[10m])) by (namespace, job) > 0
+        labels:
+          severity: critical
+      - alert: LokiRequestLatency
+        annotations:
+          message: |
+            {{ $labels.job }} {{ $labels.route }} is experiencing {{ $value | humanize }}s 99th percentile latency.
+        expr: |
+          namespace_job_route:loki_request_duration_seconds:99quantile{route!~"(?i).*tail.*"} > 1
+        for: 15m
+        labels:
+          severity: critical

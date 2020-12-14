@@ -19,11 +19,19 @@ resources:
   - v1.Service-querier.yaml
   - v1.Service-query-frontend.yaml
   - servicemonitor.yaml
+  - alerting-rules.yaml
+  - recording-rules.yaml
   - ./promtail
 configMapGenerator:
   - name: loki
     files:
       - files/config.yaml
+  - name: loki-operational-dashboard
+    files:
+      - files/loki-operational-dashboard.json
+  - name: loki-promtail-dashboard
+    files:
+      - files/loki-promtail-dashboard.json
 images:
   - name: grafana/loki:2.0.0
     digest: sha256:54a09649ff40c10186bb835cea842cbd564451d2864e6a72d851bab2825e71e5
