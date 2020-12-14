@@ -1,0 +1,76 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: distributor
+spec:
+  selector:
+    matchLabels:
+      name: distributor
+  endpoints:
+  - port: distributor-http-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ingester
+spec:
+  selector:
+    matchLabels:
+      name: ingester
+  endpoints:
+  - port: ingester-http-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: querier
+spec:
+  selector:
+    matchLabels:
+      name: querier
+  endpoints:
+  - port: querier-http-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: query-frontend
+spec:
+  selector:
+    matchLabels:
+      name: query-frontend
+  endpoints:
+  - port: query-frontend-http-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: memcached-frontend
+spec:
+  selector:
+    matchLabels:
+      name: memcached-frontend
+  endpoints:
+  - port: exporter-http-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: memcached-index-queries
+spec:
+  selector:
+    matchLabels:
+      name: memcached-index-queries
+  endpoints:
+  - port: exporter-http-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: memcached
+spec:
+  selector:
+    matchLabels:
+      name: memcached
+  endpoints:
+  - port: exporter-http-metrics
