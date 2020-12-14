@@ -27,7 +27,7 @@ spec:
         - -I 5m
         - -c 1024
         - -v
-        image: memcached:1.5.17-alpine
+        image: memcached
         ports:
         - containerPort: 11211
           name: client

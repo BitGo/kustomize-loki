@@ -35,8 +35,9 @@ images:
     digest: sha256:0e7b52eecffb7e58c2395849b3e966b31fb9fe907e2c47b4aa83bc94591db2cf
   - name: grafana/loki:2.0.0
     digest: sha256:77e138f81a8e253f1d0ea5d2dc329a02212ecab3247c87f85f1f2182a0160ccd
-  - name: memcached:1.5.17-alpine
-    digest: sha256:2edec12383a224bccf2b6fae803af75ec579cd00dbba1173b73429271ceb5f68
+  - name: memcached
+    # 1.6.9-alpine
+    digest: sha256:691e70c8483ee0cd2f9634b2a3e2a129f945c25e1c687937f46b9b407d70d11c
   - name: prom/consul-exporter:v0.5.0
     digest: sha256:3f171417faa0dedeb085cacf670ce9c2ef6faa50ddffcec17321b6ef1c11f0e9
   - name: prom/memcached-exporter:v0.6.0
