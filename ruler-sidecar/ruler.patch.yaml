@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ruler
+spec:
+  template:
+    spec:
+      containers:
+      - name: ruler
+        volumeMounts:
+        - name: rules
+          mountPath: /etc/loki/rules/fake/
+      - name: rules-sidecar
+        image: kiwigrid/k8s-sidecar
+        env:
+        - name: FOLDER
+          value: /etc/loki/rules/fake/
+        - name: LABEL
+          value: loki_rule
+        - name: NAMESPACE
+          value: ALL
+        - name: UNIQUE_FILENAMES
+          value: "true"
+        volumeMounts:
+        - name: rules
+          mountPath: /etc/loki/rules/fake/
+      volumes:
+      - name: rules
+        emptyDir: {}

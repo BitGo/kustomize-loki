@@ -26,6 +26,8 @@ resources:
   - recording-rules.yaml
   - ./promtail
   - ./loki-canary
+components:
+  - ./ruler-sidecar
 configMapGenerator:
   - name: loki
     files:
