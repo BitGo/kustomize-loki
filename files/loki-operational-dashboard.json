@@ -26,7 +26,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 76,
-  "iteration": 1607962577953,
+  "iteration": 1607974500574,
   "links": [
     {
       "icon": "dashboard",
@@ -573,99 +573,61 @@
       }
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 5,
         "w": 4,
         "x": 20,
         "y": 1
       },
-      "hiddenSeries": false,
       "id": 24,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "increase(kube_pod_container_status_restarts_total{namespace=\"$namespace\"}[10m]) > 0",
+          "expr": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"$namespace\"}[10m]))",
           "hide": false,
           "interval": "",
           "legendFormat": "{{container}}-{{pod}}",
           "refId": "B"
         }
       ],
-      "thresholds": [],
       "timeFrom": null,
-      "timeRegions": [],
       "timeShift": null,
       "title": "Container Restarts",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "stat"
     },
     {
       "aliasColors": {},
@@ -738,7 +700,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Push Latency",
+      "title": "Distributor Latency",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -754,7 +716,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -862,7 +824,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1066,7 +1028,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1237,19 +1199,19 @@
         {
           "expr": "histogram_quantile(0.99, sum by (le,route) (job_route:loki_request_duration_seconds_bucket:sum_rate{job=\"querier\", route=~\"api_prom_query|api_prom_labels|api_prom_label_name_values|loki_api_v1_query|loki_api_v1_query_range|loki_api_v1_label|loki_api_v1_label_name_values\"}))",
           "interval": "",
-          "legendFormat": ".99",
+          "legendFormat": "{{ route }}-.99",
           "refId": "A"
         },
         {
           "expr": "histogram_quantile(0.9, sum by (le,route) (job_route:loki_request_duration_seconds_bucket:sum_rate{job=\"querier\", route=~\"api_prom_query|api_prom_labels|api_prom_label_name_values|loki_api_v1_query|loki_api_v1_query_range|loki_api_v1_label|loki_api_v1_label_name_values\"}))",
           "interval": "",
-          "legendFormat": ".9",
+          "legendFormat": "{{ route }}-.9",
           "refId": "B"
         },
         {
           "expr": "histogram_quantile(0.5, sum by (le,route) (job_route:loki_request_duration_seconds_bucket:sum_rate{job=\"querier\", route=~\"api_prom_query|api_prom_labels|api_prom_label_name_values|loki_api_v1_query|loki_api_v1_query_range|loki_api_v1_label|loki_api_v1_label_name_values\"}))",
           "interval": "",
-          "legendFormat": ".5",
+          "legendFormat": "{{ route }}-.5",
           "refId": "C"
         }
       ],
@@ -1273,7 +1235,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1378,7 +1340,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1547,6 +1509,7 @@
       "targets": [
         {
           "expr": "histogram_quantile(0.99, sum by (le,route) (job_route:loki_request_duration_seconds_bucket:sum_rate{job=\"ingester\", route=~\"/logproto.Querier/Query|/logproto.Querier/Label|/logproto.Querier/Series|/logproto.Querier/QuerySample|/logproto.Querier/GetChunkIDs\"})) * 1e3",
+          "interval": "",
           "legendFormat": ".99-{{route}}",
           "refId": "A"
         },
@@ -1581,7 +1544,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -2160,7 +2123,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate({namespace=\"$namespace\", job=\"distributor\"} |= \"level=error\"[1m]))",
+              "expr": "sum(rate({namespace=\"$namespace\", name=\"distributor\"} |= \"level=error\"[1m]))",
               "refId": "A"
             }
           ],
@@ -2228,7 +2191,7 @@
           },
           "targets": [
             {
-              "expr": "{namespace=\"$namespace\", job=\"distributor\"} |= \"level=error\"",
+              "expr": "{namespace=\"loki\", name=\"distributor\"} |= \"level=error\"",
               "refId": "A"
             }
           ],
@@ -2872,7 +2835,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate({namespace=\"$namespace\", job=\"ingester\"} |= \"level=error\"[1m]))",
+              "expr": "sum(rate({namespace=\"$namespace\", name=\"ingester\"} |= \"level=error\"[1m]))",
               "refId": "A"
             }
           ],
@@ -2940,7 +2903,7 @@
           },
           "targets": [
             {
-              "expr": "{namespace=\"$namespace\", job=\"ingester\"} |= \"level=error\"",
+              "expr": "{namespace=\"$namespace\", name=\"ingester\"} |= \"level=error\"",
               "refId": "A"
             }
           ],
@@ -2965,7 +2928,7 @@
           "fillGradient": 0,
           "gridPos": {
             "h": 7,
-            "w": 6,
+            "w": 12,
             "x": 0,
             "y": 58
           },
@@ -3077,7 +3040,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 52
+            "y": 51
           },
           "hiddenSeries": false,
           "id": 106,
@@ -3173,7 +3136,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 52
+            "y": 51
           },
           "hiddenSeries": false,
           "id": 108,
@@ -3284,7 +3247,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 53
+            "y": 39
           },
           "hiddenSeries": false,
           "id": 102,
@@ -3395,7 +3358,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 53
+            "y": 39
           },
           "heatmap": {},
           "hideZeroBuckets": false,
@@ -3459,7 +3422,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 61
+            "y": 47
           },
           "hiddenSeries": false,
           "id": 96,
@@ -3580,7 +3543,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 61
+            "y": 47
           },
           "heatmap": {},
           "hideZeroBuckets": true,
@@ -4089,7 +4052,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 122
+            "y": 41
           },
           "hiddenSeries": false,
           "id": 53,
@@ -4198,7 +4161,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 130
+            "y": 49
           },
           "hiddenSeries": false,
           "id": 54,
@@ -4310,7 +4273,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 139
+            "y": 42
           },
           "hiddenSeries": false,
           "id": 79,
@@ -4419,7 +4382,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 147
+            "y": 50
           },
           "hiddenSeries": false,
           "id": 80,
@@ -4531,7 +4494,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 156
+            "y": 43
           },
           "hiddenSeries": false,
           "id": 115,
@@ -4640,7 +4603,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 164
+            "y": 51
           },
           "hiddenSeries": false,
           "id": 116,
@@ -4815,5 +4778,5 @@
   "timezone": "",
   "title": "Loki Operational",
   "uid": "f6fe30815b172c9da7e813c15ddfe607",
-  "version": 12
+  "version": 21
 }
