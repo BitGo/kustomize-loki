@@ -36,7 +36,7 @@
       "targetBlank": true,
       "title": "Promtail",
       "type": "link",
-      "url": "/grafana/d/rBadqbJGk/loki-promtail?var-datasource=$datasource&var-namespace=$namespace"
+      "url": "/d/rBadqbJGk/loki-promtail?var-datasource=$datasource&var-namespace=$namespace"
     }
   ],
   "panels": [
