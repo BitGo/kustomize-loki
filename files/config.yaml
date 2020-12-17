@@ -21,6 +21,7 @@ frontend:
     compress_responses: true
     log_queries_longer_than: 5s
     max_outstanding_per_tenant: 200
+    tail_proxy_url: querier:3100
 frontend_worker:
     frontend_address: query-frontend:9095
     grpc_client_config:
