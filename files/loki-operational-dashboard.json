@@ -9,16 +9,6 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
-      },
-      {
-        "datasource": "$logs",
-        "enable": true,
-        "expr": "{diff_namespace=\"$namespace\", container=\"kube-diff-logger\"}",
-        "hide": true,
-        "iconColor": "rgba(255, 96, 96, 1)",
-        "name": "deployments",
-        "showIn": 0,
-        "target": {}
       }
     ]
   },
