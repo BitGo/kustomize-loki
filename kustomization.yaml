@@ -27,6 +27,9 @@ configMapGenerator:
     files:
       - files/config.yaml
   - name: loki-operational-dashboard
+    options:
+      labels:
+        grafana_dashboard: "1"
     files:
       - files/loki-operational-dashboard.json
 images:

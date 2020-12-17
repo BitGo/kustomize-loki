@@ -13,6 +13,9 @@ configMapGenerator:
     files:
       - files/promtail.yaml
   - name: loki-promtail-dashboard
+    options:
+      labels:
+        grafana_dashboard: "1"
     files:
       - files/loki-promtail-dashboard.json
 images:
