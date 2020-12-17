@@ -66,9 +66,7 @@ spec:
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
+  - metadata:
       name: querier-data
     spec:
       accessModes:

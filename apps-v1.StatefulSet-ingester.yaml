@@ -74,9 +74,7 @@ spec:
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
+  - metadata:
       name: ingester-data
     spec:
       accessModes:
