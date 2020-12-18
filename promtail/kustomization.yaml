@@ -14,6 +14,7 @@ configMapGenerator:
       - files/promtail.yaml
   - name: loki-promtail-dashboard
     options:
+      disableNameSuffixHash: true
       labels:
         grafana_dashboard: "1"
     files:

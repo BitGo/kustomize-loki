@@ -29,6 +29,7 @@ configMapGenerator:
       - files/config.yaml
   - name: loki-operational-dashboard
     options:
+      disableNameSuffixHash: true
       labels:
         grafana_dashboard: "1"
     files:
