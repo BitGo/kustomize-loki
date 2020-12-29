@@ -36,7 +36,8 @@ configMapGenerator:
     files:
       - files/loki-operational-dashboard.json
 images:
-  - name: grafana/loki:2.0.0
+  - name: grafana/loki
+    newTag: 2.0.0
     digest: sha256:54a09649ff40c10186bb835cea842cbd564451d2864e6a72d851bab2825e71e5
   - name: memcached
     # 1.6.9-alpine

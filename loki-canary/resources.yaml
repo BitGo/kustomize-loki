@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: loki-canary
-        image: grafana/loki-canary:2.0.0
+        image: grafana/loki-canary
         args:
         - -addr=$(LOKI_ADDRESS)
         - -labelname=pod

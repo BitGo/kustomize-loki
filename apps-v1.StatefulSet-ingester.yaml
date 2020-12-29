@@ -29,7 +29,7 @@ spec:
         - -config.file=/etc/loki/config/config.yaml
         - -ingester.max-transfer-retries=0
         - -target=ingester
-        image: grafana/loki:2.0.0
+        image: grafana/loki
         ports:
         - containerPort: 3100
           name: http-metrics

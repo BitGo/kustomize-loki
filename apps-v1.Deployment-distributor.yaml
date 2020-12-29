@@ -27,7 +27,7 @@ spec:
         - -config.expand-env
         - -config.file=/etc/loki/config/config.yaml
         - -target=distributor
-        image: grafana/loki:2.0.0
+        image: grafana/loki
         ports:
         - containerPort: 3100
           name: http-metrics
