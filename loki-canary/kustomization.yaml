@@ -12,5 +12,5 @@ configMapGenerator:
       - files/dashboard.json
 images:
   - name: grafana/loki-canary
-    newTag: 2.0.0
-    digest: sha256:78d83ec294d6d5d8b12fca9bec150ca6325579ca8338ad74b390cdcbbd8475c6
+    newTag: 2.1.0
+    digest: sha256:1656f0f9fc60860902497559f712165a3770b475072f7379ce0bd136865955ff
