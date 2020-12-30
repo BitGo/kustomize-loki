@@ -64,6 +64,14 @@ scrape_configs:
   - job_name: kubernetes-pods-app
     pipeline_stages:
       - docker: {}
+      - match:
+          selector: '{app="eventrouter"}'
+          stages:
+            - json:
+                expressions:
+                  namespace: event.metadata.namespace
+            - labels:
+                namespace: ""
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
