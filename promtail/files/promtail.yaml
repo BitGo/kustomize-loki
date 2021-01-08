@@ -70,8 +70,12 @@ scrape_configs:
             - json:
                 expressions:
                   namespace: event.metadata.namespace
+                  ts: event.lastTimestamp
             - labels:
                 namespace: ""
+            - timestamp:
+                format: RFC3339
+                source: ts
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
