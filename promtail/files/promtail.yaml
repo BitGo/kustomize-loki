@@ -65,7 +65,7 @@ scrape_configs:
     pipeline_stages:
       - docker: {}
       - match:
-          selector: '{app="eventrouter"}'
+          selector: '{app="eventrouter",stream="stdout"}'
           stages:
             - json:
                 expressions:
