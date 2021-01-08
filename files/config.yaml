@@ -61,6 +61,7 @@ memberlist:
   join_members:
     - distributor
     - ingester
+    - querier
 querier:
   query_ingesters_within: 2h
 query_range:
