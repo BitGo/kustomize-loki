@@ -61,6 +61,13 @@ scrape_configs:
           - __meta_kubernetes_pod_uid
           - __meta_kubernetes_pod_container_name
         target_label: __path__
+      - action: replace
+        replacement: /var/log/pods/*$1/*.log
+        separator: /
+        source_labels:
+          - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
+          - __meta_kubernetes_pod_container_name
+        target_label: __path__
   - job_name: kubernetes-pods-app
     pipeline_stages:
       - docker: {}
@@ -124,6 +131,13 @@ scrape_configs:
           - __meta_kubernetes_pod_uid
           - __meta_kubernetes_pod_container_name
         target_label: __path__
+      - action: replace
+        replacement: /var/log/pods/*$1/*.log
+        separator: /
+        source_labels:
+          - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
+          - __meta_kubernetes_pod_container_name
+        target_label: __path__
   - job_name: kubernetes-pods-direct-controllers
     pipeline_stages:
       - docker: {}
@@ -179,6 +193,13 @@ scrape_configs:
         separator: /
         source_labels:
           - __meta_kubernetes_pod_uid
+          - __meta_kubernetes_pod_container_name
+        target_label: __path__
+      - action: replace
+        replacement: /var/log/pods/*$1/*.log
+        separator: /
+        source_labels:
+          - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
           - __meta_kubernetes_pod_container_name
         target_label: __path__
   - job_name: kubernetes-pods-indirect-controller
@@ -240,6 +261,13 @@ scrape_configs:
           - __meta_kubernetes_pod_uid
           - __meta_kubernetes_pod_container_name
         target_label: __path__
+      - action: replace
+        replacement: /var/log/pods/*$1/*.log
+        separator: /
+        source_labels:
+          - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
+          - __meta_kubernetes_pod_container_name
+        target_label: __path__
   - job_name: kubernetes-pods-static
     pipeline_stages:
       - docker: {}
@@ -290,6 +318,13 @@ scrape_configs:
         separator: /
         source_labels:
           - __meta_kubernetes_pod_annotation_kubernetes_io_config_mirror
+          - __meta_kubernetes_pod_container_name
+        target_label: __path__
+      - action: replace
+        replacement: /var/log/pods/*$1/*.log
+        separator: /
+        source_labels:
+          - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
           - __meta_kubernetes_pod_container_name
         target_label: __path__
   - job_name: journal
