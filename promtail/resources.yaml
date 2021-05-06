@@ -164,6 +164,10 @@ spec:
           ports:
             - containerPort: 3101
               name: http-metrics
+          resources:
+            requests:
+              cpu: 100m
+              memory: 75Mi
           securityContext:
             readOnlyRootFilesystem: true
             runAsGroup: 0
