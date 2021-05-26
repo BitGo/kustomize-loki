@@ -67,6 +67,7 @@ querier:
 query_range:
   align_queries_with_step: true
   cache_results: true
+  parallelise_shardable_queries: true
   results_cache:
     cache:
       memcached_client:
