@@ -3,7 +3,8 @@ kind: Service
 metadata:
   name: query-frontend
   labels:
-    name: query-frontend
+    app.kubernetes.io/name: query-frontend
+    app.kubernetes.io/part-of: loki
 spec:
   clusterIP: None
   ports:
@@ -15,4 +16,5 @@ spec:
     targetPort: 9095
   publishNotReadyAddresses: true
   selector:
-    name: query-frontend
+    app.kubernetes.io/name: query-frontend
+    app.kubernetes.io/part-of: loki

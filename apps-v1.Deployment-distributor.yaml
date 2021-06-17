@@ -2,24 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: distributor
+  labels:
+    app.kubernetes.io/name: distributor
+    app.kubernetes.io/part-of: loki
 spec:
   minReadySeconds: 10
   replicas: 3
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      name: distributor
+      app.kubernetes.io/name: distributor
+      app.kubernetes.io/part-of: loki
   template:
     metadata:
       labels:
-        name: distributor
+        app.kubernetes.io/name: distributor
+        app.kubernetes.io/part-of: loki
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
-                name: distributor
+                app.kubernetes.io/name: distributor
+                app.kubernetes.io/part-of: loki
             topologyKey: kubernetes.io/hostname
       containers:
       - name: distributor

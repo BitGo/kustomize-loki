@@ -2,16 +2,21 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: compactor
+  labels:
+    app.kubernetes.io/name: compactor
+    app.kubernetes.io/part-of: loki
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: compactor
+      app.kubernetes.io/name: compactor
+      app.kubernetes.io/part-of: loki
   serviceName: compactor
   template:
     metadata:
       labels:
-        name: compactor
+        app.kubernetes.io/name: compactor
+        app.kubernetes.io/part-of: loki
     spec:
       containers:
       - name: compactor

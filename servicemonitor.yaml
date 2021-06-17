@@ -5,7 +5,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: compactor
+      app.kubernetes.io/name: compactor
+      app.kubernetes.io/part-of: loki
   endpoints:
   - port: compactor-http-metrics
 ---
@@ -16,7 +17,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: distributor
+      app.kubernetes.io/name: distributor
+      app.kubernetes.io/part-of: loki
   endpoints:
   - port: distributor-http-metrics
 ---
@@ -27,7 +29,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: ingester
+      app.kubernetes.io/name: ingester
+      app.kubernetes.io/part-of: loki
   endpoints:
   - port: ingester-http-metrics
 ---
@@ -38,7 +41,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: querier
+      app.kubernetes.io/name: querier
+      app.kubernetes.io/part-of: loki
   endpoints:
   - port: querier-http-metrics
 ---
@@ -49,7 +53,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: query-frontend
+      app.kubernetes.io/name: query-frontend
+      app.kubernetes.io/part-of: loki
   endpoints:
   - port: query-frontend-http-metrics
 ---
@@ -60,7 +65,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: memcached-frontend
+      app.kubernetes.io/name: memcached-frontend
+      app.kubernetes.io/part-of: loki
   endpoints:
   - port: exporter-http-metrics
 ---
@@ -71,7 +77,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: memcached-index-queries
+      app.kubernetes.io/name: memcached-index-queries
+      app.kubernetes.io/part-of: loki
   endpoints:
   - port: exporter-http-metrics
 ---
@@ -82,6 +89,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: memcached
+      app.kubernetes.io/name: memcached
+      app.kubernetes.io/part-of: loki
   endpoints:
   - port: exporter-http-metrics

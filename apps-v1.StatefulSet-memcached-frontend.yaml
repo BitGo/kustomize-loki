@@ -2,23 +2,29 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: memcached-frontend
+  labels:
+    app.kubernetes.io/name: memcached-frontend
+    app.kubernetes.io/part-of: loki
 spec:
   replicas: 3
   selector:
     matchLabels:
-      name: memcached-frontend
+      app.kubernetes.io/name: memcached-frontend
+      app.kubernetes.io/part-of: loki
   serviceName: memcached-frontend
   template:
     metadata:
       labels:
-        name: memcached-frontend
+        app.kubernetes.io/name: memcached-frontend
+        app.kubernetes.io/part-of: loki
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
-                name: memcached-frontend
+                app.kubernetes.io/name: memcached-frontend
+                app.kubernetes.io/part-of: loki
             topologyKey: kubernetes.io/hostname
       containers:
       - name: memcached

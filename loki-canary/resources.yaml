@@ -2,15 +2,17 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: loki-canary
+  labels:
+    app.kubernetes.io/name: loki-canary
 spec:
   minReadySeconds: 10
   selector:
     matchLabels:
-      name: loki-canary
+      app.kubernetes.io/name: loki-canary
   template:
     metadata:
       labels:
-        name: loki-canary
+        app.kubernetes.io/name: loki-canary
     spec:
       containers:
       - name: loki-canary
@@ -48,11 +50,11 @@ kind: Service
 metadata:
   name: loki-canary
   labels:
-    name: loki-canary
+    app.kubernetes.io/name: loki-canary
 spec:
   type: ClusterIP
   selector:
-    name: loki-canary
+    app.kubernetes.io/name: loki-canary
   ports:
   - name: http-metrics
     protocol: TCP
@@ -64,10 +66,10 @@ kind: ServiceMonitor
 metadata:
   name: loki-canary
   labels:
-    name: loki-canary
+    app.kubernetes.io/name: loki-canary
 spec:
   selector:
     matchLabels:
-      name: loki-canary
+      app.kubernetes.io/name: loki-canary
   endpoints:
   - port: http-metrics

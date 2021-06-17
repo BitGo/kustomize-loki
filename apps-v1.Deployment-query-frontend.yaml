@@ -2,24 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: query-frontend
+  labels:
+    app.kubernetes.io/name: query-frontend
+    app.kubernetes.io/part-of: loki
 spec:
   minReadySeconds: 10
   replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      name: query-frontend
+      app.kubernetes.io/name: query-frontend
+      app.kubernetes.io/part-of: loki
   template:
     metadata:
       labels:
-        name: query-frontend
+        app.kubernetes.io/name: query-frontend
+        app.kubernetes.io/part-of: loki
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
-                name: query-frontend
+                app.kubernetes.io/name: query-frontend
+                app.kubernetes.io/part-of: loki
             topologyKey: kubernetes.io/hostname
       containers:
       - name: query-frontend

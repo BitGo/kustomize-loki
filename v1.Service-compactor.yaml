@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: compactor
   labels:
-    name: compactor
+    app.kubernetes.io/name: compactor
+    app.kubernetes.io/part-of: loki
 spec:
   ports:
   - name: compactor-http-metrics
     port: 3100
     targetPort: 3100
   selector:
-    name: compactor
+    app.kubernetes.io/name: compactor
+    app.kubernetes.io/part-of: loki

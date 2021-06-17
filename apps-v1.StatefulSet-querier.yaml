@@ -2,23 +2,29 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: querier
+  labels:
+    app.kubernetes.io/name: querier
+    app.kubernetes.io/part-of: loki
 spec:
   replicas: 3
   selector:
     matchLabels:
-      name: querier
+      app.kubernetes.io/name: querier
+      app.kubernetes.io/part-of: loki
   serviceName: querier
   template:
     metadata:
       labels:
-        name: querier
+        app.kubernetes.io/name: querier
+        app.kubernetes.io/part-of: loki
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
-                name: querier
+                app.kubernetes.io/name: querier
+                app.kubernetes.io/part-of: loki
             topologyKey: kubernetes.io/hostname
       containers:
       - name: querier
