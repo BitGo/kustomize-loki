@@ -3,28 +3,28 @@ kind: StatefulSet
 metadata:
   name: memcached-index-queries
   labels:
-    app.kubernetes.io/name: memcached-index-queries
-    app.kubernetes.io/part-of: loki
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: memcached-index-queries
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: memcached-index-queries
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: memcached-index-queries
   serviceName: memcached-index-queries
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: memcached-index-queries
-        app.kubernetes.io/part-of: loki
+        app.kubernetes.io/name: loki
+        app.kubernetes.io/component: memcached-index-queries
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
-                app.kubernetes.io/name: memcached-index-queries
-                app.kubernetes.io/part-of: loki
+                app.kubernetes.io/name: loki
+                app.kubernetes.io/component: memcached-index-queries
             topologyKey: kubernetes.io/hostname
       containers:
       - name: memcached

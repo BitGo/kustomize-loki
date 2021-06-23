@@ -3,28 +3,28 @@ kind: StatefulSet
 metadata:
   name: querier
   labels:
-    app.kubernetes.io/name: querier
-    app.kubernetes.io/part-of: loki
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: querier
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: querier
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: querier
   serviceName: querier
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: querier
-        app.kubernetes.io/part-of: loki
+        app.kubernetes.io/name: loki
+        app.kubernetes.io/component: querier
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
-                app.kubernetes.io/name: querier
-                app.kubernetes.io/part-of: loki
+                app.kubernetes.io/name: loki
+                app.kubernetes.io/component: querier
             topologyKey: kubernetes.io/hostname
       containers:
       - name: querier

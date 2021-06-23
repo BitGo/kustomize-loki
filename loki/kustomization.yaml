@@ -28,6 +28,9 @@ components:
   - ./ruler-sidecar
 configMapGenerator:
   - name: loki
+    options:
+      labels:
+        app.kubernetes.io/name: loki
     files:
       - files/config.yaml
   - name: loki-operational-dashboard

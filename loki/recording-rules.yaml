@@ -2,6 +2,8 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: loki-recording-rules
+  labels:
+    app.kubernetes.io/name: loki
 spec:
   groups:
   - name: loki.rules

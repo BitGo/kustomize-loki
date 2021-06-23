@@ -3,9 +3,11 @@ kind: PodDisruptionBudget
 metadata:
   name: loki-ingester-pdb
   labels:
-    name: loki-ingester-pdb
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: ingester
 spec:
   maxUnavailable: 1
   selector:
     matchLabels:
-      name: ingester
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: ingester

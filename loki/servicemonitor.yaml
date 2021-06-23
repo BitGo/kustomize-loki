@@ -2,11 +2,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: compactor
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: compactor
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: compactor
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: compactor
   endpoints:
   - port: compactor-http-metrics
 ---
@@ -14,11 +17,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: distributor
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: distributor
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: distributor
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: distributor
   endpoints:
   - port: distributor-http-metrics
 ---
@@ -26,11 +32,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: ingester
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: ingester
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: ingester
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: ingester
   endpoints:
   - port: ingester-http-metrics
 ---
@@ -38,11 +47,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: querier
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: querier
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: querier
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: querier
   endpoints:
   - port: querier-http-metrics
 ---
@@ -50,11 +62,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: query-frontend
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: query-frontend
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: query-frontend
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: query-frontend
   endpoints:
   - port: query-frontend-http-metrics
 ---
@@ -62,11 +77,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: ruler
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: ruler
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: ruler
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: ruler
   endpoints:
   - port: ruler-http-metrics
 ---
@@ -74,11 +92,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: memcached-frontend
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: memcached-frontend
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: memcached-frontend
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: memcached-frontend
   endpoints:
   - port: exporter-http-metrics
 ---
@@ -86,11 +107,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: memcached-index-queries
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: memcached-index-queries
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: memcached-index-queries
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: memcached-index-queries
   endpoints:
   - port: exporter-http-metrics
 ---
@@ -98,10 +122,13 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: memcached
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: memcached
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: memcached
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: memcached
   endpoints:
   - port: exporter-http-metrics

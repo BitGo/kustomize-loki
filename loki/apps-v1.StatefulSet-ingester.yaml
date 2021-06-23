@@ -3,28 +3,28 @@ kind: StatefulSet
 metadata:
   name: ingester
   labels:
-    app.kubernetes.io/name: ingester
-    app.kubernetes.io/part-of: loki
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: ingester
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: ingester
-      app.kubernetes.io/part-of: loki
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: ingester
   serviceName: ingester
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: ingester
-        app.kubernetes.io/part-of: loki
+        app.kubernetes.io/name: loki
+        app.kubernetes.io/component: ingester
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
-                app.kubernetes.io/name: ingester
-                app.kubernetes.io/part-of: loki
+                app.kubernetes.io/name: loki
+                app.kubernetes.io/component: ingester
             topologyKey: kubernetes.io/hostname
       containers:
       - name: ingester

@@ -3,8 +3,8 @@ kind: Service
 metadata:
   name: memcached-index-queries
   labels:
-    app.kubernetes.io/name: memcached-index-queries
-    app.kubernetes.io/part-of: loki
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: memcached-index-queries
 spec:
   clusterIP: None
   ports:
@@ -15,5 +15,5 @@ spec:
     port: 9150
     targetPort: 9150
   selector:
-    app.kubernetes.io/name: memcached-index-queries
-    app.kubernetes.io/part-of: loki
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: memcached-index-queries
