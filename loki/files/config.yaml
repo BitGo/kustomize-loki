@@ -85,6 +85,10 @@ ruler:
   enable_alertmanager_v2: true
   enable_api: true
   enable_sharding: true
+  remote_write:
+    enabled: ${LOKI_RULER_REMOTE_WRITE_ENABLED:-false}
+    client:
+      url: ${LOKI_RULER_REMOTE_WRITE_CLIENT_URL}
   ring:
     kvstore:
       store: memberlist
