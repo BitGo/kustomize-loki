@@ -80,6 +80,7 @@ query_range:
   split_queries_by_interval: 30m
 ruler:
   alertmanager_url: ${LOKI_RULER_ALERTMANAGER_URL}
+  external_url: ${LOKI_RULER_EXTERNAL_URL}
   enable_alertmanager_v2: true
   enable_api: true
   enable_sharding: true
