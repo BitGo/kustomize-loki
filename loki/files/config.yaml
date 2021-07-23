@@ -46,8 +46,8 @@ ingester_client:
   remote_timeout: 1s
 limits_config:
   enforce_metric_name: false
-  ingestion_burst_size_mb: 20
-  ingestion_rate_mb: 10
+  ingestion_burst_size_mb: 30
+  ingestion_rate_mb: 15
   ingestion_rate_strategy: global
   max_cache_freshness_per_query: 10m
   max_concurrent_tail_requests: ${LOKI_LIMITS_CONFIG_MAX_CONCURRENT_TAIL_REQUESTS:-100}
