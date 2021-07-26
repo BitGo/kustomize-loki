@@ -34,6 +34,13 @@ spec:
         - -config.file=/etc/loki/config/config.yaml
         - -log.level=debug
         - -target=query-frontend
+        envFrom:
+        - configMapRef:
+            name: loki-env-vars
+            optional: true
+        - secretRef:
+            name: loki-env-vars
+            optional: true
         image: grafana/loki
         ports:
         - containerPort: 3100
