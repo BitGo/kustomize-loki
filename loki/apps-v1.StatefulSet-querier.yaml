@@ -33,6 +33,13 @@ spec:
         - -config.expand-env
         - -config.file=/etc/loki/config/config.yaml
         - -target=querier
+        envFrom:
+        - configMapRef:
+            name: loki-env-vars
+            optional: true
+        - secretRef:
+            name: loki-env-vars
+            optional: true
         image: grafana/loki
         ports:
         - containerPort: 3100
