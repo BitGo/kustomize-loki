@@ -65,6 +65,7 @@ memberlist:
     - ruler
 querier:
   query_ingesters_within: 2h
+  query_timeout: ${LOKI_QUERIER_QUERY_TIMEOUT:60s}
 query_range:
   align_queries_with_step: true
   cache_results: true
