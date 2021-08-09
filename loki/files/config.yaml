@@ -8,9 +8,6 @@ chunk_store_config:
       consistent_hash: true
       host: memcached
       service: memcached-client
-  # Must be a multiple of schema_config index.period
-  # Default to 400 days retention.
-  max_look_back_period: 9600h
 compactor:
   shared_store: aws
 distributor:
@@ -20,7 +17,7 @@ distributor:
 frontend:
   compress_responses: true
   log_queries_longer_than: 5s
-  max_outstanding_per_tenant: 200
+  max_outstanding_per_tenant: 1024
   tail_proxy_url: http://querier:3100/
 frontend_worker:
   frontend_address: query-frontend:9095
@@ -53,7 +50,7 @@ limits_config:
   max_concurrent_tail_requests: ${LOKI_LIMITS_CONFIG_MAX_CONCURRENT_TAIL_REQUESTS:-100}
   max_global_streams_per_user: 10000
   max_query_length: 12000h
-  max_query_parallelism: 16
+  max_query_parallelism: 256
   max_streams_per_user: 0
   reject_old_samples: true
   reject_old_samples_max_age: 168h
@@ -64,6 +61,10 @@ memberlist:
     - querier
     - ruler
 querier:
+  engine:
+    # Must be a multiple of schema_config index.period
+    # Default to 400 days retention.
+    max_look_back_period: 9600h
   query_ingesters_within: 2h
 query_range:
   align_queries_with_step: true
