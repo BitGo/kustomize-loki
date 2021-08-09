@@ -53,7 +53,7 @@ spec:
         args:
         - --memcached.address=localhost:11211
         - --web.listen-address=0.0.0.0:9150
-        image: prom/memcached-exporter:v0.6.0
+        image: prom/memcached-exporter
         ports:
         - containerPort: 9150
           name: http-metrics
