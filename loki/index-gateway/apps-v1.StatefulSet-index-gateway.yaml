@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: index-gateway
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: index-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/component: index-gateway
+  serviceName: index-gateway
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: loki
+        app.kubernetes.io/component: index-gateway
+    spec:
+      containers:
+      - name: index-gateway
+        args:
+        - -boltdb.shipper.cache-location=/data/boltdb-cache
+        - -config.expand-env
+        - -config.file=/etc/loki/config/config.yaml
+        - -target=index-gateway
+        envFrom:
+        - configMapRef:
+            name: loki-env-vars
+            optional: true
+        - secretRef:
+            name: loki-env-vars
+            optional: true
+        image: grafana/loki
+        ports:
+        - containerPort: 3100
+          name: http-metrics
+        - containerPort: 9095
+          name: grpc
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3100
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+        volumeMounts:
+        - mountPath: /data
+          name: index-gateway-data
+        - mountPath: /etc/loki/config
+          name: loki
+      securityContext:
+        fsGroup: 10001
+        runAsGroup: 10001
+        runAsNonRoot: true
+        runAsUser: 10001
+      serviceAccount: loki
+      volumes:
+      - configMap:
+          name: loki
+        name: loki
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: index-gateway-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 50Gi
