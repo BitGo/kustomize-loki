@@ -8,9 +8,6 @@ chunk_store_config:
       consistent_hash: true
       host: memcached
       service: memcached-client
-  # Must be a multiple of schema_config index.period
-  # Default to 400 days retention.
-  max_look_back_period: 9600h
 compactor:
   shared_store: aws
 distributor:
@@ -64,6 +61,10 @@ memberlist:
     - querier
     - ruler
 querier:
+  engine:
+    # Must be a multiple of schema_config index.period
+    # Default to 400 days retention.
+    max_look_back_period: 9600h
   query_ingesters_within: 2h
 query_range:
   align_queries_with_step: true
