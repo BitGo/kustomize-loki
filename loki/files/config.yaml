@@ -89,7 +89,7 @@ ruler:
   remote_write:
     enabled: ${LOKI_RULER_REMOTE_WRITE_ENABLED:-false}
     client:
-      url: ${LOKI_RULER_REMOTE_WRITE_CLIENT_URL}
+      url: ${LOKI_RULER_REMOTE_WRITE_CLIENT_URL:-""}
   ring:
     kvstore:
       store: memberlist
