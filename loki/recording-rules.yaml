@@ -44,41 +44,5 @@ spec:
       record: namespace_job_route:loki_request_duration_seconds_sum:sum_rate
     - expr: sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)
       record: namespace_job_route:loki_request_duration_seconds_count:sum_rate
-  - name: promtail.rules
-    rules:
-    - expr: histogram_quantile(0.99, sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job))
-      record: job:promtail_request_duration_seconds:99quantile
-    - expr: histogram_quantile(0.50, sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job))
-      record: job:promtail_request_duration_seconds:50quantile
-    - expr: sum(rate(promtail_request_duration_seconds_sum[1m])) by (job) / sum(rate(promtail_request_duration_seconds_count[1m])) by (job)
-      record: job:promtail_request_duration_seconds:avg
-    - expr: sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job)
-      record: job:promtail_request_duration_seconds_bucket:sum_rate
-    - expr: sum(rate(promtail_request_duration_seconds_sum[1m])) by (job)
-      record: job:promtail_request_duration_seconds_sum:sum_rate
-    - expr: sum(rate(promtail_request_duration_seconds_count[1m])) by (job)
-      record: job:promtail_request_duration_seconds_count:sum_rate
-    - expr: histogram_quantile(0.99, sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job, namespace))
-      record: job_namespace:promtail_request_duration_seconds:99quantile
-    - expr: histogram_quantile(0.50, sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job, namespace))
-      record: job_namespace:promtail_request_duration_seconds:50quantile
-    - expr: sum(rate(promtail_request_duration_seconds_sum[1m])) by (job, namespace) / sum(rate(promtail_request_duration_seconds_count[1m])) by (job, namespace)
-      record: job_namespace:promtail_request_duration_seconds:avg
-    - expr: sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job, namespace)
-      record: job_namespace:promtail_request_duration_seconds_bucket:sum_rate
-    - expr: sum(rate(promtail_request_duration_seconds_sum[1m])) by (job, namespace)
-      record: job_namespace:promtail_request_duration_seconds_sum:sum_rate
-    - expr: sum(rate(promtail_request_duration_seconds_count[1m])) by (job, namespace)
-      record: job_namespace:promtail_request_duration_seconds_count:sum_rate
-    - expr: histogram_quantile(0.99, sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job, status_code, namespace))
-      record: job_status_code_namespace:promtail_request_duration_seconds:99quantile
-    - expr: histogram_quantile(0.50, sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job, status_code, namespace))
-      record: job_status_code_namespace:promtail_request_duration_seconds:50quantile
-    - expr: sum(rate(promtail_request_duration_seconds_sum[1m])) by (job, status_code, namespace) / sum(rate(promtail_request_duration_seconds_count[1m])) by (job, status_code, namespace)
-      record: job_status_code_namespace:promtail_request_duration_seconds:avg
-    - expr: sum(rate(promtail_request_duration_seconds_bucket[1m])) by (le, job, status_code, namespace)
-      record: job_status_code_namespace:promtail_request_duration_seconds_bucket:sum_rate
-    - expr: sum(rate(promtail_request_duration_seconds_sum[1m])) by (job, status_code, namespace)
-      record: job_status_code_namespace:promtail_request_duration_seconds_sum:sum_rate
-    - expr: sum(rate(promtail_request_duration_seconds_count[1m])) by (job, status_code, namespace)
-      record: job_status_code_namespace:promtail_request_duration_seconds_count:sum_rate
+    - expr: sum(rate(container_cpu_usage_seconds_total)[1m]) by (pod,container)
+      record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
