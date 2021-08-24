@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki
+  labels:
+    app.kubernetes.io/name: loki
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/prom/push
+        pathType: Prefix
+        backend:
+          service:
+            name: distributor
+            port:
+              number: 3100
+      - path: /api/prom/tail
+        pathType: Prefix
+        backend:
+          service:
+            name: querier
+            port:
+              number: 3100
+      - path: /api/prom
+        pathType: Prefix
+        backend:
+          service:
+            name: query-frontend
+            port:
+              number: 3100
+      - path: /loki/api/v1/push
+        pathType: Prefix
+        backend:
+          service:
+            name: distributor
+            port:
+              number: 3100
+      - path: /loki/api/v1/tail
+        pathType: Prefix
+        backend:
+          service:
+            name: querier
+            port:
+              number: 3100
+      - path: /loki/api
+        pathType: Prefix
+        backend:
+          service:
+            name: query-frontend
+            port:
+              number: 3100
