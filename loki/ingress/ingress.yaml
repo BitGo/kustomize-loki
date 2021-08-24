@@ -43,6 +43,13 @@ spec:
             name: querier
             port:
               number: 3100
+      - path: /loki/api/v1/rules
+        pathType: Prefix
+        backend:
+          service:
+            name: ruler
+            port:
+              number: 3100
       - path: /loki/api
         pathType: Prefix
         backend:
