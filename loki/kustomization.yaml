@@ -25,6 +25,7 @@ resources:
   - alerting-rules.yaml
   - recording-rules.yaml
 components:
+  - ./index-gateway
   - ./ruler-sidecar
 configMapGenerator:
   - name: loki

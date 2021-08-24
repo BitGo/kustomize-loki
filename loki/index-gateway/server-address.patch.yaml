@@ -1,0 +1,6 @@
+- op: test
+  path: /spec/template/spec/containers/0/args/0
+  value: -boltdb.shipper.cache-location=/data/boltdb-cache
+- op: replace
+  path: /spec/template/spec/containers/0/args/0
+  value: -boltdb.shipper.index-gateway-client.server-address=dns:///index-gateway:9095
