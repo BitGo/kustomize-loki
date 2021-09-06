@@ -3,26 +3,27 @@ permissions:
   contents: read
   pull-requests: read
 jobs:
-  validate_loki_rules:
+  validate_recording_rules:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Generate Loki rules
+      - name: Create recording rules directory
+        run: mkdir /tmp/recording-rules
+
+      - name: Generate Loki recording rules
         uses: mikefarah/yq@master
         with:
-          cmd: yq .spec loki/recording-rules.yaml > /tmp/loki-rules.yaml
+          cmd: yq .spec loki/recording-rules.yaml > /tmp/recording-rules/rules.yaml
 
       - name: Lint rules
         uses: grafana//cortex-rules-action@v0.1.1
         env:
           ACTION: lint
-          RULES_DIR: /tmp/
+          RULES_DIR: /tmp/recording-rules/
 
       - name: Check rules
         uses: grafana//cortex-rules-action@v0.1.1
         env:
           ACTION: check
-          RULES_DIR: /tmp/
-
-   
+          RULES_DIR: /tmp/recording-rules/
