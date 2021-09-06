@@ -1,0 +1,28 @@
+on: pull_request
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  validate_loki_rules:
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate Loki rules
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq .spec loki/recording-rules.yaml > /tmp/loki-rules.yaml
+
+      - name: Lint rules
+        uses: grafana//cortex-rules-action@v0.1.1
+        env:
+          ACTION: lint
+          RULES_DIR: /tmp/
+
+      - name: Check rules
+        uses: grafana//cortex-rules-action@v0.1.1
+        env:
+          ACTION: check
+          RULES_DIR: /tmp/
+
+   
