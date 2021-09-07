@@ -2072,7 +2072,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate({namespace=\"$namespace\", name=\"distributor\"} |= \"level=error\"[1m]))",
+              "expr": "sum(rate({namespace=\"$namespace\", app=\"loki\", component=\"distributor\"} |= \"level=error\"[1m]))",
               "refId": "A"
             }
           ],
@@ -2140,7 +2140,7 @@
           },
           "targets": [
             {
-              "expr": "{namespace=\"loki\", name=\"distributor\"} |= \"level=error\"",
+              "expr": "{namespace=\"$namespace\", app=\"loki\", component=\"distributor\"} |= \"level=error\"",
               "refId": "A"
             }
           ],
@@ -2784,7 +2784,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate({namespace=\"$namespace\", name=\"ingester\"} |= \"level=error\"[1m]))",
+              "expr": "sum(rate({namespace=\"$namespace\", app=\"loki\", component=\"ingester\"} |= \"level=error\"[1m]))",
               "refId": "A"
             }
           ],
@@ -2852,7 +2852,7 @@
           },
           "targets": [
             {
-              "expr": "{namespace=\"$namespace\", name=\"ingester\"} |= \"level=error\"",
+              "expr": "{namespace=\"$namespace\", app=\"loki\", component=\"ingester\"} |= \"level=error\"",
               "refId": "A"
             }
           ],
@@ -3796,7 +3796,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate({namespace=\"$namespace\", job=\"querier\"} |= \"level=error\"[1m]))",
+              "expr": "sum(rate({namespace=\"$namespace\", app=\"loki\", component=\"querier\"} |= \"level=error\"[1m]))",
               "refId": "A"
             }
           ],
@@ -3864,7 +3864,7 @@
           },
           "targets": [
             {
-              "expr": "{namespace=\"$namespace\", job=\"querier\"} |= \"level=error\"",
+              "expr": "{namespace=\"$namespace\", app=\"loki\", component=\"querier\"} |= \"level=error\"",
               "refId": "A"
             }
           ],
