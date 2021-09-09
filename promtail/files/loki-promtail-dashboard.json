@@ -755,7 +755,7 @@
         "multi": false,
         "name": "name",
         "options": [],
-        "query": "label_values(kube_pod_info{namespace=\"$namespace\",pod=~\"promtail.*\"}, created_by_name)",
+        "query": "label_values(kube_pod_info{namespace=\"$namespace\",pod=~\"loki-promtail-.*\"}, created_by_name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
