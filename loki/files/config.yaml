@@ -65,6 +65,7 @@ querier:
     # Must be a multiple of schema_config index.period
     # Default to 400 days retention.
     max_look_back_period: 9600h
+    timeout: ${LOKI_QUERIER_ENGINE_TIMEOUT:-3m}
   query_ingesters_within: 2h
   query_timeout: ${LOKI_QUERIER_QUERY_TIMEOUT:-60s}
 query_range:
