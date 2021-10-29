@@ -156,6 +156,12 @@ scrape_configs:
         source_labels:
           - __meta_kubernetes_pod_label_app_kubernetes_io_name
           - __meta_kubernetes_pod_label_app
+      # Drop pods that have no controller
+      - action: drop
+        regex: ''
+        source_labels:
+          - __meta_kubernetes_pod_controller_name
+      # Drop pods that have an indirect controller
       - action: drop
         regex: '[0-9a-z-.]+-[0-9a-f]{8,10}'
         source_labels:
