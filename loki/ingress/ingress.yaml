@@ -50,6 +50,20 @@ spec:
             name: ruler
             port:
               number: 3100
+      - path: /prometheus/api/v1/alerts
+        pathType: Prefix
+        backend:
+          service:
+            name: ruler
+            port:
+              number: 3100
+      - path: /prometheus/api/v1/rules
+        pathType: Prefix
+        backend:
+          service:
+            name: ruler
+            port:
+              number: 3100
       - path: /loki/api
         pathType: Prefix
         backend:
