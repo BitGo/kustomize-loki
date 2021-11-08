@@ -39,6 +39,10 @@ spec:
           requests:
             cpu: 10m
             memory: 20Mi
+      securityContext:
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
       tolerations:
       - effect: NoSchedule
         operator: Exists
