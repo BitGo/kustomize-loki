@@ -36,7 +36,10 @@ ingester:
       kvstore:
         store: memberlist
       replication_factor: 3
-  max_transfer_retries: 60
+  wal:
+    # should be set upto ~50% of available memory
+    replay_memory_ceiling: ${LOKI_INGESTER_WAL_REPLAY_MEMORY_CEILING:-5GB}
+  max_transfer_retries: 0
 ingester_client:
   grpc_client_config:
     max_recv_msg_size: 67108864
