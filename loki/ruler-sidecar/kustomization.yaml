@@ -6,5 +6,5 @@ patches:
   - path: ruler.patch.yaml
 images:
   - name: kiwigrid/k8s-sidecar
-    newTag: 1.12.2
-    digest: sha256:ca760f94b35eb78575b170e41d1e19e27359b29245dacfd1c42ae90452ecc08e
+    newTag: 1.14.2
+    digest: sha256:35654389f8a9b7816193a4811cf3ceb6cf309ece8874e84b3d2d8399e618059b

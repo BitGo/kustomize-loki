@@ -1,66 +1,37 @@
----
-# Source: promtail/templates/podsecuritypolicy.yaml
-apiVersion: policy/v1beta1
-kind: PodSecurityPolicy
-metadata:
-  name: loki-promtail
-  labels:
-    app.kubernetes.io/name: promtail
-spec:
-  allowPrivilegeEscalation: false
-  fsGroup:
-    rule: RunAsAny
-  hostIPC: false
-  hostNetwork: false
-  hostPID: false
-  privileged: false
-  readOnlyRootFilesystem: true
-  requiredDropCapabilities:
-  - ALL
-  runAsUser:
-    rule: RunAsAny
-  seLinux:
-    rule: RunAsAny
-  supplementalGroups:
-    rule: RunAsAny
-  volumes:
-  - secret
-  - configMap
-  - hostPath
-  - projected
-  - downwardAPI
-  - emptyDir
----
 # Source: promtail/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  name: loki-promtail
   labels:
     app.kubernetes.io/name: promtail
-  name: loki-promtail
 ---
 # Source: promtail/templates/clusterrole.yaml
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
+  name: loki-promtail
   labels:
     app.kubernetes.io/name: promtail
-  name: loki-promtail-clusterrole
 rules:
-- apiGroups: [""] # "" indicates the core API group
-  resources:
-  - nodes
-  - nodes/proxy
-  - services
-  - endpoints
-  - pods
-  verbs: ["get", "watch", "list"]
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - nodes/proxy
+      - services
+      - endpoints
+      - pods
+    verbs:
+      - get
+      - watch
+      - list
 ---
 # Source: promtail/templates/clusterrolebinding.yaml
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: loki-promtail-clusterrolebinding
+  name: loki-promtail
   labels:
     app.kubernetes.io/name: promtail
 subjects:
@@ -68,51 +39,23 @@ subjects:
     name: loki-promtail
 roleRef:
   kind: ClusterRole
-  name: loki-promtail-clusterrole
+  name: loki-promtail
   apiGroup: rbac.authorization.k8s.io
----
-# Source: promtail/templates/role.yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: loki-promtail
-  labels:
-    app.kubernetes.io/name: promtail
-rules:
-- apiGroups:      ['extensions']
-  resources:      ['podsecuritypolicies']
-  verbs:          ['use']
-  resourceNames:  [loki-promtail]
----
-# Source: promtail/templates/rolebinding.yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: loki-promtail
-  labels:
-    app.kubernetes.io/name: promtail
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: loki-promtail
-subjects:
-- kind: ServiceAccount
-  name: loki-promtail
 ---
 # Source: promtail/templates/service-headless.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: loki-promtail-headless
+  name: loki-promtail-metrics
   labels:
     app.kubernetes.io/name: promtail
 spec:
   clusterIP: None
   ports:
-    - port: 3101
-      protocol: TCP
-      name: http-metrics
+    - name: http-metrics
+      port: 3101
       targetPort: http-metrics
+      protocol: TCP
   selector:
     app.kubernetes.io/name: promtail
 ---
@@ -127,12 +70,17 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: promtail
+  updateStrategy:
+    {}
   template:
     metadata:
       labels:
         app.kubernetes.io/name: promtail
     spec:
       serviceAccountName: loki-promtail
+      securityContext:
+        runAsGroup: 0
+        runAsUser: 0
       containers:
         - name: promtail
           image: grafana/promtail
@@ -162,16 +110,19 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
           ports:
-            - containerPort: 3101
-              name: http-metrics
+            - name: http-metrics
+              containerPort: 3101
+              protocol: TCP
           resources:
             requests:
               cpu: 100m
               memory: 75Mi
           securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
             readOnlyRootFilesystem: true
-            runAsGroup: 0
-            runAsUser: 0
           readinessProbe:
             failureThreshold: 5
             httpGet:
@@ -217,4 +168,4 @@ spec:
     matchLabels:
       app.kubernetes.io/name: promtail
   endpoints:
-  - port: http-metrics
+    - port: http-metrics

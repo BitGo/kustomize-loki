@@ -34,7 +34,7 @@ spec:
         - -boltdb.shipper.cache-location=/data/boltdb-cache
         - -config.expand-env
         - -config.file=/etc/loki/config/config.yaml
-        - -ingester.max-transfer-retries=0
+        - -ingester.wal-dir=/loki/wal
         - -target=ingester
         envFrom:
         - configMapRef:
@@ -72,6 +72,8 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: ingester-data
+        - mountPath: /loki/wal
+          name: ingester-wal
         - mountPath: /etc/loki/config
           name: loki
       securityContext:
@@ -96,3 +98,11 @@ spec:
       resources:
         requests:
           storage: 10Gi
+  - metadata:
+      name: ingester-wal
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 150Gi

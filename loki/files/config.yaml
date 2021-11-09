@@ -10,10 +10,6 @@ chunk_store_config:
       service: memcached-client
 compactor:
   shared_store: aws
-distributor:
-  ring:
-    kvstore:
-      store: memberlist
 frontend:
   compress_responses: true
   log_queries_longer_than: 5s
@@ -33,10 +29,11 @@ ingester:
     num_tokens: 512
     ring:
       heartbeat_timeout: 1m
-      kvstore:
-        store: memberlist
       replication_factor: 3
-  max_transfer_retries: 60
+  wal:
+    # should be set upto ~50% of available memory
+    replay_memory_ceiling: ${LOKI_INGESTER_WAL_REPLAY_MEMORY_CEILING:-5GB}
+  max_transfer_retries: 0
 ingester_client:
   grpc_client_config:
     max_recv_msg_size: 67108864
@@ -91,9 +88,6 @@ ruler:
     enabled: ${LOKI_RULER_REMOTE_WRITE_ENABLED:-false}
     client:
       url: ${LOKI_RULER_REMOTE_WRITE_CLIENT_URL:-""}
-  ring:
-    kvstore:
-      store: memberlist
   rule_path: /run/loki/ruler/scratch/
   storage:
     type: local
