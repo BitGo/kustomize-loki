@@ -33,6 +33,7 @@ spec:
         - -config.expand-env
         - -config.file=/etc/loki/config/config.yaml
         - -target=ruler
+        - -ruler.wal.dir=/data/ruler-wal
         envFrom:
         - configMapRef:
             name: loki-env-vars
