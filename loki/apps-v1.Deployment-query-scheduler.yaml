@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: query-frontend
+  name: query-scheduler
   labels:
     app.kubernetes.io/name: loki
-    app.kubernetes.io/component: query-frontend
+    app.kubernetes.io/component: query-scheduler
 spec:
   minReadySeconds: 10
   replicas: 2
@@ -12,12 +12,12 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: loki
-      app.kubernetes.io/component: query-frontend
+      app.kubernetes.io/component: query-scheduler
   template:
     metadata:
       labels:
         app.kubernetes.io/name: loki
-        app.kubernetes.io/component: query-frontend
+        app.kubernetes.io/component: query-scheduler
     spec:
       affinity:
         podAntiAffinity:
@@ -25,15 +25,15 @@ spec:
           - labelSelector:
               matchLabels:
                 app.kubernetes.io/name: loki
-                app.kubernetes.io/component: query-frontend
+                app.kubernetes.io/component: query-scheduler
             topologyKey: kubernetes.io/hostname
       containers:
-      - name: query-frontend
+      - name: query-scheduler
         args:
         - -config.expand-env
         - -config.file=/etc/loki/config/config.yaml
         - -log.level=debug
-        - -target=query-frontend
+        - -target=query-scheduler
         envFrom:
         - configMapRef:
             name: loki-env-vars
@@ -46,7 +46,7 @@ spec:
         - containerPort: 3100
           name: http-metrics
         - containerPort: 9095
-          name: grpc
+          name: grpclb
         readinessProbe:
           httpGet:
             path: /ready
@@ -55,10 +55,10 @@ spec:
           timeoutSeconds: 1
         resources:
           limits:
-            memory: 6Gi
+            memory: 1200Mi
           requests:
             cpu: "2"
-            memory: 2Gi
+            memory: 600Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
