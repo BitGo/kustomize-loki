@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - apps-v1.Deployment-distributor.yaml
   - apps-v1.Deployment-query-frontend.yaml
+  - apps-v1.Deployment-query-scheduler.yaml
   - apps-v1.StatefulSet-compactor.yaml
   - apps-v1.StatefulSet-ingester.yaml
   - apps-v1.StatefulSet-memcached-frontend.yaml
@@ -20,6 +21,7 @@ resources:
   - v1.Service-memcached.yaml
   - v1.Service-querier.yaml
   - v1.Service-query-frontend.yaml
+  - v1.Service-query-scheduler-discovery.yaml
   - v1.Service-ruler.yaml
   - servicemonitor.yaml
   - alerting-rules.yaml
