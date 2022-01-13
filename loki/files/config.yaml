@@ -18,22 +18,18 @@ frontend:
 frontend_worker:
   grpc_client_config:
     max_send_msg_size: 104857600
-  parallelism: 2
   scheduler_address: query-scheduler-discovery:9095
 ingester:
-  chunk_block_size: 262144
   chunk_idle_period: 15m
   lifecycler:
     heartbeat_period: 5s
     join_after: 30s
     num_tokens: 512
     ring:
-      heartbeat_timeout: 1m
       replication_factor: 3
   wal:
     # should be set upto ~50% of available memory
     replay_memory_ceiling: ${LOKI_INGESTER_WAL_REPLAY_MEMORY_CEILING:-5GB}
-  max_transfer_retries: 0
 ingester_client:
   grpc_client_config:
     max_recv_msg_size: 67108864
@@ -63,21 +59,16 @@ querier:
     # Default to 400 days retention.
     max_look_back_period: 9600h
     timeout: ${LOKI_QUERIER_ENGINE_TIMEOUT:-3m}
-  query_ingesters_within: 2h
   query_timeout: ${LOKI_QUERIER_QUERY_TIMEOUT:-60s}
 query_range:
   align_queries_with_step: true
   cache_results: true
-  parallelise_shardable_queries: true
   results_cache:
     cache:
       memcached_client:
-        consistent_hash: true
         host: memcached-frontend
-        max_idle_conns: 16
         service: memcached-client
         timeout: 500ms
-  split_queries_by_interval: 30m
 query_scheduler:
   max_outstanding_requests_per_tenant: 1024
 ruler:
@@ -121,6 +112,5 @@ storage_config:
     memcached:
       batch_size: 100
     memcached_client:
-      consistent_hash: true
       host: memcached-index-queries
       service: memcached-client
