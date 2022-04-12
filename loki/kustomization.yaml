@@ -45,11 +45,11 @@ configMapGenerator:
       - files/loki-operational-dashboard.json
 images:
   - name: grafana/loki
-    newTag: 2.4.2
-    digest: sha256:b3af8ead67d7e80fec05029f783784df897e92b6dba31fe4b33ab4ea3e989573
+    newTag: 2.5.0
+    digest: sha256:f9ef133793af0b8dc9091fb9694edebb2392a17558639b8a17767afddcca7a0f
   - name: memcached
-    newTag: 1.6.12-alpine
-    digest: sha256:3f7a5344127ef35b161215381f8ecf72d17896f2650ad0d253a9f77db7731b56
+    newTag: 1.6.15-alpine
+    digest: sha256:06bc630f006be575ae4e8a55e515a66daba0ed432f0e46ecfacf654daf4f07e6
   - name: prom/memcached-exporter
     newTag: v0.9.0
     digest: sha256:bed44ac76ba3b62dc5c5ae342da85be4af83609b509a16f0b53630cd69bdb368
