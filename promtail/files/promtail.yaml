@@ -11,6 +11,18 @@ scrape_configs:
   - job_name: kubernetes-pods-app-kubernetes-io-name
     pipeline_stages:
       - docker: {}
+      - match:
+          selector: '{app="eventrouter",stream="stdout"}'
+          stages:
+            - json:
+                expressions:
+                  namespace: event.metadata.namespace
+                  ts: event.lastTimestamp
+            - labels:
+                namespace: ""
+            - timestamp:
+                format: RFC3339
+                source: ts
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
