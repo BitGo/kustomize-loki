@@ -45,8 +45,8 @@ configMapGenerator:
       - files/loki-operational-dashboard.json
 images:
   - name: grafana/loki
-    newTag: 2.6.0
-    digest: sha256:a71b24036726609b436844746dc469382c5164fb43a75ac0951989f8b3b279c9
+    newTag: 2.6.1
+    digest: sha256:1ee60f980950b00e505bd564b40f720132a0653b110e993043bb5940673d060a
   - name: memcached
     newTag: 1.6.15-alpine
     digest: sha256:06bc630f006be575ae4e8a55e515a66daba0ed432f0e46ecfacf654daf4f07e6
