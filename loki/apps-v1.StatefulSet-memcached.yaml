@@ -39,7 +39,6 @@ spec:
           name: client
         resources:
           limits:
-            cpu: "3"
             memory: 6Gi
           requests:
             cpu: 500m
