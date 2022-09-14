@@ -6,7 +6,6 @@ server:
 
 scrape_configs:
   # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
-
   # Pods with a label 'app.kubernetes.io/name'
   - job_name: kubernetes-pods-app-kubernetes-io-name
     pipeline_stages:
@@ -23,11 +22,13 @@ scrape_configs:
             - timestamp:
                 format: RFC3339
                 source: ts
-            - labeldrop:
-              - filename    
+      - labeldrop:
+          - filename
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
+      - action: labeldrop
+        regex: .*filename.*
       - action: replace
         source_labels:
           - __meta_kubernetes_pod_label_app_kubernetes_io_name
@@ -79,7 +80,11 @@ scrape_configs:
           - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
           - __meta_kubernetes_pod_container_name
         target_label: __path__
-
+      - action: drop
+        regex: .+
+        separator: ''
+        source_labels:
+          - filename
   # Pods with a label 'app'
   - job_name: kubernetes-pods-app
     pipeline_stages:
@@ -96,11 +101,13 @@ scrape_configs:
             - timestamp:
                 format: RFC3339
                 source: ts
-            - labeldrop:
-              - filename                
+      - labeldrop:
+          - filename                
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
+      - action: labeldrop
+        regex: .*filename.*    
       # Drop pods with label 'app.kubernetes.io/name'. They are already considered above
       - action: drop
         regex: .+
@@ -157,14 +164,22 @@ scrape_configs:
           - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
           - __meta_kubernetes_pod_container_name
         target_label: __path__
-
+      - action: drop
+        regex: .+
+        separator: ''
+        source_labels:
+          - filename
   # Pods with direct controllers, such as StatefulSet
   - job_name: kubernetes-pods-direct-controllers
     pipeline_stages:
       - docker: {}
+      - labeldrop:
+          - filename      
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
+      - action: labeldrop
+        regex: .*filename.*    
       # Drop pods with label 'app.kubernetes.io/name' or 'app'. They are already considered above
       - action: drop
         regex: .+
@@ -225,15 +240,23 @@ scrape_configs:
           - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
           - __meta_kubernetes_pod_container_name
         target_label: __path__
-
+      - action: drop
+        regex: .+
+        separator: ''
+        source_labels:
+          - filename
   # Pods with indirect controllers, such as Deployment
   - job_name: kubernetes-pods-indirect-controller
     pipeline_stages:
       - docker: {}
+      - labeldrop:
+          - filename      
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
       # Drop pods with label 'app.kubernetes.io/name' or 'app'. They are already considered above
+      - action: labeldrop
+        regex: .*filename.*    
       - action: drop
         regex: .+
         separator: ''
@@ -288,14 +311,24 @@ scrape_configs:
           - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
           - __meta_kubernetes_pod_container_name
         target_label: __path__
+      - action: drop
+        regex: .+
+        separator: ''
+        source_labels:
+          - filename
   # All remaining pods not yet covered
   - job_name: kubernetes-other
     pipeline_stages:
       - docker: {}
+      - labeldrop:
+          - filename
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
+      - action: labeldrop
+        regex: .*filename.*    
       # Drop what has already been covered
+
       - action: drop
         regex: .+
         separator: ''
@@ -350,6 +383,11 @@ scrape_configs:
           - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
           - __meta_kubernetes_pod_container_name
         target_label: __path__
+      - action: drop
+        regex: .+
+        separator: ''
+        source_labels:
+          - filename
 
   # systemd-journal
   - job_name: journal
@@ -360,6 +398,8 @@ scrape_configs:
       labels:
         job: systemd-journal
     relabel_configs:
+      - action: labeldrop
+        regex: .*filename.*
       - source_labels:
           - __journal__transport
         target_label: transport
@@ -375,3 +415,8 @@ scrape_configs:
       - source_labels:
           - __journal_priority_keyword
         target_label: level
+      - action: drop
+        regex: .+
+        separator: ''
+        source_labels:
+          - filename
