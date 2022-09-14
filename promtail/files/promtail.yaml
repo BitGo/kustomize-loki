@@ -23,6 +23,8 @@ scrape_configs:
             - timestamp:
                 format: RFC3339
                 source: ts
+            - labeldrop:
+              - filename    
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
@@ -94,6 +96,8 @@ scrape_configs:
             - timestamp:
                 format: RFC3339
                 source: ts
+            - labeldrop:
+              - filename                
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
