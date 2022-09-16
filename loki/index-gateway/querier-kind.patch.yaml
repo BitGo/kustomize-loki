@@ -6,16 +6,15 @@
 
 # Now that we don't need storage, there's no need for this to be a StatefulSet
 # -> swap kind for a Deployment
-# XXX: Disabled the `kind` change due to https://github.com/kubernetes-sigs/kustomize/issues/4136
-# - op: replace
-#   path: /kind
-#   value: Deployment
-# - op: remove
-#   path: /spec/podManagementPolicy
-# - op: add
-#   path: /spec/minReadySeconds
-#   value: 10
-# - op: remove
-#   path: /spec/serviceName
-# - op: remove
-#   path: /spec/updateStrategy
+- op: replace
+  path: /kind
+  value: Deployment
+- op: remove
+  path: /spec/podManagementPolicy
+- op: add
+  path: /spec/minReadySeconds
+  value: 10
+- op: remove
+  path: /spec/serviceName
+- op: remove
+  path: /spec/updateStrategy
