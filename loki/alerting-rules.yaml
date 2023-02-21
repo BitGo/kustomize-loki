@@ -28,15 +28,6 @@ spec:
             sum(increase(loki_panic_total[10m])) by (namespace, job) > 0
           labels:
             severity: critical
-        - alert: LokiRequestLatency
-          annotations:
-            message: |
-              {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf "%.2f" $value }}s 99th percentile latency.
-          expr: |
-            namespace_job_route:loki_request_duration_seconds:99quantile{route!~"(?i).*tail.*"} > 1
-          for: 30m
-          labels:
-            severity: critical
         - alert: LokiTooManyCompactorsRunning
           annotations:
             message: |
