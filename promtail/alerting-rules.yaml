@@ -43,7 +43,7 @@ spec:
           message: |
             {{ $labels.instance }} {{ $labels.job }} {{ $labels.path }} matches the glob but is not being tailed.
         expr: |
-          promtail_file_bytes_total unless promtail_read_bytes_total
+          (promtail_file_bytes_total unless promtail_read_bytes_total) > 0
         for: 15m
         labels:
           severity: critical
