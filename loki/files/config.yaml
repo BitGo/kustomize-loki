@@ -1,4 +1,6 @@
 auth_enabled: false
+common:
+  compactor_address: http://compactor:3100
 chunk_store_config:
   chunk_cache_config:
     memcached:
