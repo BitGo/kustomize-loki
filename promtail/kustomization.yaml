@@ -21,5 +21,5 @@ configMapGenerator:
       - files/loki-promtail-dashboard.json
 images:
   - name: grafana/promtail
-    newTag: 2.8.2
-    digest: sha256:762bc5be21174c50c636cf53e4c94bacf940488a803edb3e3018f6d0dd09df57
+    newTag: 2.8.4
+    digest: sha256:67f60160f2d65f37f0a457109bfb5bd456ec630b7c29a399cd3ef6ae80048469
