@@ -51,7 +51,7 @@ spec:
           name: memberlist
         resources:
           requests:
-            cpu: "1"
+            cpu: 1
             memory: 6Gi
           limits:
             memory: 16Gi
