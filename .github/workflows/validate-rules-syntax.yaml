@@ -1,0 +1,100 @@
+on: pull_request
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  validate_loki_recording_rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create tmp dir 
+        run: mkdir -p validation/recording-rules
+
+      - name: Generate Loki recording rules
+        run: yq e '.spec' loki/recording-rules.yaml > validation/recording-rules/rules.yaml
+
+      - name: Lint rules
+        uses: grafana//cortex-rules-action@v0.8.0
+        env:
+          ACTION: lint
+          RULES_DIR: validation/recording-rules/
+
+      - name: Check rules
+        uses: grafana//cortex-rules-action@v0.8.0
+        env:
+          ACTION: check
+          RULES_DIR: validation/recording-rules/
+
+  validate_loki_alerting_rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create tmp dir 
+        run: mkdir -p validation/alerting-rules
+
+      - name: Generate Loki alerting rules
+        run: yq e '.spec' loki/alerting-rules.yaml > validation/alerting-rules/rules.yaml
+
+      - name: Lint rules
+        uses: grafana//cortex-rules-action@v0.8.0
+        env:
+          ACTION: lint
+          RULES_DIR: validation/alerting-rules/
+
+      - name: Check rules
+        uses: grafana//cortex-rules-action@v0.8.0
+        env:
+          ACTION: check
+          RULES_DIR: validation/alerting-rules/
+
+  validate_promtail_recording_rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create tmp dir 
+        run: mkdir -p validation/recording-rules
+
+      - name: Generate Loki recording rules
+        run: yq e '.spec' promtail/recording-rules.yaml > validation/recording-rules/rules.yaml
+
+      - name: Lint rules
+        uses: grafana//cortex-rules-action@v0.8.0
+        env:
+          ACTION: lint
+          RULES_DIR: validation/recording-rules/
+
+      - name: Check rules
+        uses: grafana//cortex-rules-action@v0.8.0
+        env:
+          ACTION: check
+          RULES_DIR: validation/recording-rules/
+
+  validate_promtail_alerting_rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create tmp dir 
+        run: mkdir -p validation/alerting-rules
+
+      - name: Generate Loki alerting rules
+        run: yq e '.spec' promtail/alerting-rules.yaml > validation/alerting-rules/rules.yaml
+
+      - name: Lint rules
+        uses: grafana//cortex-rules-action@v0.8.0
+        env:
+          ACTION: lint
+          RULES_DIR: validation/alerting-rules/
+
+      - name: Check rules
+        uses: grafana//cortex-rules-action@v0.8.0
+        env:
+          ACTION: check
+          RULES_DIR: validation/alerting-rules/
